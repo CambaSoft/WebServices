@@ -1,0 +1,42 @@
+
+tasks:
+  - name: Configure Wakatime
+    command: |
+      echo "[settings]" >> /home/gitpod/.wakatime.cfg
+      echo "api_key = $WAKATIME_API_KEY" >> /home/gitpod/.wakatime.cfg
+      exit
+
+  - name: Install Dependencies
+    command: |
+      composer install
+      gp sync-done install-dependencies
+      exit
+
+  - name: Configuring Laravel Project
+    command: |
+      gp sync-await install-dependencies
+      cp .env.example .env
+      php artisan key:generate
+      echo "DB_CONNECTION=$DB_CONNECTION" >> .env
+      echo "DB_DATABASE=$DB_DATABASE" >> .env
+      echo "DB_HOST=$DB_HOST" >> .env
+      echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+      echo "DB_PORT=$DB_PORT" >> .env
+      echo "DB_USERNAME=$DB_USERNAME" >> .env
+      gp sync-done configure-project
+      exit
+
+  - name: Run project
+    command: |
+      gp sync-await configure-project
+      php artisan serve
+
+vscode:
+  extensions:
+    - bmewburn.vscode-intelephense-client
+    - alefragnani.bookmarks
+    - eamodio.gitlens
+    - pkief.material-icon-theme
+    - esbenp.prettier-vscode
+    - wakatime.vscode-wakatime
+    - github.vscode-pull-request-github
