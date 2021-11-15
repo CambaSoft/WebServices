@@ -36,7 +36,8 @@ vscode:
     - bmewburn.vscode-intelephense-client
     - alefragnani.bookmarks
     - eamodio.gitlens
-    - pkief.material-icon-theme
     - esbenp.prettier-vscode
     - wakatime.vscode-wakatime
     - github.vscode-pull-request-github
+    - equinusocio.vsc-material-theme-icons
+    - a5hk.night-coder
