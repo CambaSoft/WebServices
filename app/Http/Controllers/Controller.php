@@ -46,4 +46,22 @@ class Controller extends BaseController
             'data' => $data
         ], 404);
     }
+
+    public static function responseDataBaseError($message, $data = null)
+    {
+        return response()->json([
+            'status' => 'db_warning',
+            'message' => $message,
+            'data' => $data
+        ], 406);
+    }
+
+    public static function responseInternalError($message, $data = null)
+    {
+        return response()->json([
+            'status' => 'error',
+            'message' => $message,
+            'data' => $data
+        ], 500);
+    }
 }
