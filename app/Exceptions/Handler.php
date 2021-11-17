@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -36,6 +38,15 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (Throwable $e) {
+            switch ($e) {
+                case $e instanceof QueryException:
+                    return Controller::responseDataBaseError($e->getMessage());
+                default:
+                    return Controller::responseInternalError($e->getMessage());
+            }
         });
     }
 }
