@@ -27,14 +27,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'full_name' => 'required|max:50',
             'email' => 'required|unique:users|max:30',
-            'password' => 'required|min:3|max:20'
+            'name' => 'required|max:60',
+            'firstName' => 'required|max:30',
+            'lastName' => 'required|max:30',
         ]);
         if ($validator->fails()) {
             return $this->responseBadRequest($validator->getMessageBag());
         }
-        $request['password'] = bcrypt($request['password']);
         $user = new User($request->toArray());
         $user->save();
         return $this->responseCreated($user);
