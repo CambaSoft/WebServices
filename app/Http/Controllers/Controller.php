@@ -11,7 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function responseOk($data)
+    public function responseOk($data = null)
     {
         return response()->json([
             'status' => 'success',
@@ -45,6 +45,15 @@ class Controller extends BaseController
             'message' => 'Not Found.',
             'data' => $data
         ], 404);
+    }
+
+    public function responseUnauthorized($message, $data = null)
+    {
+        return response()->json([
+            'status' => 'unathorized',
+            'message' => $message,
+            'data' => $data
+        ], 401);
     }
 
     public static function responseDataBaseError($message, $data = null)
