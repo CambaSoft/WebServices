@@ -31,10 +31,13 @@ class UserController extends Controller
         $idToken = $request['idToken'];
         $client = new Google_Client(['client_id' => env('GOOGLE_CLIENT_ID')]);
         $payload = $client->verifyIdToken($idToken);
-        if ($payload) {
-            return $this->responseOk(User::where('email', $payload['email'])->first());
+        if (!$payload) {
+            return $this->responseUnauthorized('Id Token is not valid.');
         }
-        return $this->responseUnauthorized('Id Token is not valid.');
+        $user = User::where('email', $payload['email'])->first();
+        if(!$user) {
+            return $this->responseNotFound('User not found.');
+        }
+        return $this->responseOk($user);
     }
-
 }
