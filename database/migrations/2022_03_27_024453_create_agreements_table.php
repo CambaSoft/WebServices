@@ -31,6 +31,6 @@ class CreateAgreementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('agreements');
     }
 }
